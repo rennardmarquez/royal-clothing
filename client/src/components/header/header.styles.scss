@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+  height: 45px;
+
+  .logo {
+    width: 35px;
+    vertical-align: middle;
+  }
+}

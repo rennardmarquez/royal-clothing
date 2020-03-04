@@ -1,0 +1,61 @@
+.cover {
+  height: 400px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .background-image {
+    background-image: url("../../assets/cover.jpeg");
+    height: 100%;
+    width: 100%;
+    background-position: top;
+    background-size: cover;
+
+    transform: scale(1);
+    filter: brightness(100%);
+    transition: transform 1s, filter 1s;
+  }
+
+  &:hover {
+    & .background-image {
+      transform: scale(1.1);
+      filter: brightness(50%);
+      transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95), filter 1s;
+    }
+  }
+
+  .content {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+
+    .title {
+      opacity: 1;
+      padding: 15px;
+      color: white;
+      font-family: "Montserrat";
+    }
+
+    .shop-button {
+      display: flex;
+      justify-content: center;
+
+      .button-text {
+        padding: 20px;
+        width: auto;
+        background-color: white;
+        font-family: "Montserrat";
+        font-weight: bold;
+        font-size: 15px;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+}
