@@ -1,0 +1,13 @@
+.footer {
+  height: 400px;
+  width: 100%;
+  background-color: #111111;
+  display: flex;
+
+  .footer-left {
+    width: 50%;
+    border-right: ridge;
+    border-width: 1px;
+    border-color: rgb(95, 95, 95);
+  }
+}

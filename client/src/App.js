@@ -5,6 +5,7 @@ import Homepage from "./pages/homepage/homepage";
 
 import Announcement from "./components/announcement/announcement";
 import Header from "./components/header/header";
+import Footer from "./components/footer/footer";
 
 class App extends React.Component {
   render() {
@@ -16,6 +17,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Homepage} />
         </Switch>
+        <Footer />
       </Fragment>
     );
   }

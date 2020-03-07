@@ -2,12 +2,24 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 20px;
+  padding: 20px 40px;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
   height: 45px;
+  align-items: center;
 
   .logo {
     width: 35px;
     vertical-align: middle;
+  }
+
+  .options {
+    .option {
+      text-decoration: none;
+      margin: 0 10px;
+      font-family: "Montserrat";
+      font-weight: bold;
+      color: #333333;
+      font-size: small;
+    }
   }
 }
