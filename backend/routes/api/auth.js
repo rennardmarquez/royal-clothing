@@ -1,26 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcryptjs");
+const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const { check, validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
 
 const User = require("../../models/User");
 
-//@route POST api/users
-//@desc Register user
-//@access Public
+//@router   POST api/auth
+//@desc     Login user and get token
+//@access   Private
 router.post(
   "/",
   [
-    check("name", "Name is required")
-      .not()
-      .isEmpty(),
     check("email", "Please include a valid email address").isEmail(),
-    check(
-      "password",
-      "Please enter a password with 6 or more characters"
-    ).isLength({ min: 6 })
+    check("password", "Password is required").exists()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -28,31 +22,27 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-      //Find user with similar email
-      const oldUser = await User.findOne({ email });
+      //See if user exists
+      let user = await User.findOne({ email });
 
-      if (oldUser) {
+      if (!user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "User already exists" }] });
+          .json({ errors: [{ msg: "Invalid credentials" }] });
       }
 
-      const user = new User({
-        name,
-        email,
-        password
-      });
+      const isMatch = await bcrypt.compare(password, user.password);
 
-      //Hash password
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
+      if (!isMatch) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid credentials" }] });
+      }
 
-      await user.save();
-
-      // Return jsonwebtoken
+      //Return jsonwebtoken
       const payload = {
         user: {
           id: user.id
@@ -63,7 +53,7 @@ router.post(
         payload,
         config.get("jwtSecret"),
         { expiresIn: 360000 },
-        (err, token) => {
+        (err, res) => {
           if (err) throw err;
           res.json({ token });
         }
