@@ -7,9 +7,9 @@ const bcrypt = require("bcryptjs");
 
 const User = require("../../models/User");
 
-//@router   POST api/auth
-//@desc     Login user and get token
-//@access   Private
+// @route   POST api/auth
+// @desc    Authenticate user & get token
+// @access  Public
 router.post(
   "/",
   [
@@ -25,7 +25,7 @@ router.post(
     const { email, password } = req.body;
 
     try {
-      //See if user exists
+      // See if user exists
       let user = await User.findOne({ email });
 
       if (!user) {
@@ -42,7 +42,7 @@ router.post(
           .json({ errors: [{ msg: "Invalid credentials" }] });
       }
 
-      //Return jsonwebtoken
+      // Return jsonwebtoken
       const payload = {
         user: {
           id: user.id
@@ -53,7 +53,7 @@ router.post(
         payload,
         config.get("jwtSecret"),
         { expiresIn: 360000 },
-        (err, res) => {
+        (err, token) => {
           if (err) throw err;
           res.json({ token });
         }
