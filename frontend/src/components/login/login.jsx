@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import CustomButton from "../custom-button/custom-button";
 
 import FormInput from "../form-input/form-input";
 
 import "./login.styles.scss";
 
-const Login = () => {
+//Redux
+import { connect } from "react-redux";
+import { login } from "../../actions/auth";
+
+const Login = ({ login }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -18,7 +21,14 @@ const Login = () => {
     let { value, name } = event.target;
 
     setFormData({ ...formData, [name]: value });
-    console.log(formData);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    login(email, password);
+
+    console.log("submitted");
   };
 
   return (
@@ -26,9 +36,7 @@ const Login = () => {
       <h2>I already have an account</h2>
       <span>Sign in with your email and password</span>
 
-      <form
-      // onSubmit={this.handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
         <FormInput
           type="email"
           name="email"
@@ -43,10 +51,14 @@ const Login = () => {
           label="password"
           handleChange={handleChange}
         />
+        <CustomButton className="standard" children="Login" />
       </form>
-      <CustomButton className="standard" children="Login" />
     </div>
   );
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);

@@ -18,10 +18,6 @@ const Register = ({ register }) => {
 
   const { name, email, password, password2 } = formData;
 
-  // useEffect(() => {
-  //   setFormData();
-  // }, [formData]);
-
   const handleChange = event => {
     const { name, value } = event.target;
 

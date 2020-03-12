@@ -8,8 +8,8 @@ const auth = require("../../middleware/auth");
 
 const User = require("../../models/User");
 
-//@route GET api/auth
-//@desc
+//@route  GET api/auth
+//@desc   Get user data
 //@access Private
 router.get("/", auth, async (req, res) => {
   try {
