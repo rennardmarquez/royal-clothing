@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import "./header.styles.scss";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 
-const Header = () => (
+//Redux
+import { connect } from "react-redux";
+import { logout } from "../../actions/auth";
+
+const Header = ({ isAuthenticated, logout }) => (
   <div className="header">
     <Link to="/">
       <Logo src="../../assets/crown.svg" alt="Logo" className="logo" />
@@ -14,11 +18,21 @@ const Header = () => (
       <Link className="option" to="/shop">
         SHOP
       </Link>
-      <Link className="option" to="/login">
-        LOG IN
-      </Link>
+      {isAuthenticated ? (
+        <div className="option" onClick={logout}>
+          LOG OUT
+        </div>
+      ) : (
+        <Link className="option" to="/login">
+          LOG IN
+        </Link>
+      )}
     </div>
   </div>
 );
 
-export default Header;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { logout })(Header);

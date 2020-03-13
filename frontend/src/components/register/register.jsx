@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import "./register.styles.scss";
 import FormInput from "../form-input/form-input";
@@ -78,9 +78,4 @@ const Register = ({ register, setAlert }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  alert: state.alert
-});
-
-export default connect(mapStateToProps, { register, setAlert })(Register);
+export default connect(null, { register, setAlert })(Register);

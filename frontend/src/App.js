@@ -1,42 +1,53 @@
 import React, { Fragment, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
+//Pages
 import Homepage from "./pages/homepage/homepage";
 import LoginRegister from "./pages/login-register/login-register";
+import Dashboard from "./pages/dashboard/dashboard";
 
+//Components
 import Announcement from "./components/announcement/announcement";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 
 //Redux
-import { Provider } from "react-redux";
+import { connect } from "react-redux";
 import store from "./store";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
-
-const App = () => {
+const App = ({ isAuthenticated }) => {
   useEffect(() => {
-    store.dispatch(loadUser());
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+      store.dispatch(loadUser());
+    }
   }, []);
 
   return (
-    <Provider store={store}>
-      <Fragment>
-        <Announcement />
-        <Header />
+    <Fragment>
+      <Announcement />
+      <Header />
 
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route exact path="/login" component={LoginRegister} />
-        </Switch>
-        <Footer />
-      </Fragment>
-    </Provider>
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route
+          exact
+          path="/login"
+          render={() =>
+            isAuthenticated ? <Redirect to="/dashboard" /> : <LoginRegister />
+          }
+        />
+        <Route exact path="/dashboard" component={Dashboard} />
+      </Switch>
+      <Footer />
+    </Fragment>
   );
 };
 
-export default App;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(App);
