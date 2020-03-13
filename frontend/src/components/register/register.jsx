@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import "./register.styles.scss";
 import FormInput from "../form-input/form-input";
 import CustomButton from "../custom-button/custom-button";
+import Alert from "../alert/alert";
 
 //Redux
 import { connect } from "react-redux";
 import { register } from "../../actions/auth";
+import { setAlert } from "../../actions/alert";
 
-const Register = ({ register }) => {
+const Register = ({ register, setAlert }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,7 +30,7 @@ const Register = ({ register }) => {
     event.preventDefault();
 
     if (password !== password2) {
-      console.log("Passwords do not match");
+      setAlert("Passwords do not match");
     } else {
       register({ name, email, password });
     }
@@ -68,6 +70,8 @@ const Register = ({ register }) => {
           label="Confirm Password"
           handleChange={e => handleChange(e)}
         />
+        <Alert />
+
         <CustomButton className="standard" children="Register" />
       </form>
     </div>
@@ -75,7 +79,8 @@ const Register = ({ register }) => {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  alert: state.alert
 });
 
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps, { register, setAlert })(Register);
