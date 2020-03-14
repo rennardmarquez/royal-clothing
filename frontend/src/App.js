@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 //Pages
 import Homepage from "./pages/homepage/homepage";
 import LoginRegister from "./pages/login-register/login-register";
-import Dashboard from "./pages/dashboard/dashboard";
+import Shop from "./pages/shop/shop";
 
 //Components
 import Announcement from "./components/announcement/announcement";
@@ -36,10 +36,10 @@ const App = ({ isAuthenticated }) => {
           exact
           path="/login"
           render={() =>
-            isAuthenticated ? <Redirect to="/dashboard" /> : <LoginRegister />
+            isAuthenticated ? <Redirect to="/shop" /> : <LoginRegister />
           }
         />
-        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/shop" component={Shop} />
       </Switch>
       <Footer />
     </Fragment>
