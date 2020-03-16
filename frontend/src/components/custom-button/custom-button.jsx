@@ -1,7 +1,7 @@
 import React from "react";
 
-const CustomButton = ({ className, children }) => (
-  <button className type="submit">
+const CustomButton = ({ children, item, onClick }) => (
+  <button className="custom-button" type="submit" onClick={onClick}>
     {children}
   </button>
 );

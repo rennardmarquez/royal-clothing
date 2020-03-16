@@ -1,7 +1,10 @@
-import { VIEW_CART } from "../actions/types";
+import { VIEW_CART, ADD_TO_CART } from "../actions/types";
+
+import addItemsToCart from "../utils/addItemsToCart";
 
 const initialState = {
-  isHidden: true
+  isHidden: true,
+  cartItems: []
 };
 
 export default function(state = initialState, action) {
@@ -12,6 +15,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isHidden: !state.isHidden
+      };
+    case ADD_TO_CART:
+      return {
+        ...state,
+        cartItems: addItemsToCart(state.cartItems, payload)
       };
     default:
       return state;
