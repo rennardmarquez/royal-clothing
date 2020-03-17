@@ -5,12 +5,17 @@ import "./cart-icon.styles.scss";
 
 import { connect } from "react-redux";
 import { viewCart } from "../../actions/cart";
+import { selectCartItemsCount } from "../../selectors/cart";
 
-const CartIcon = ({ viewCart }) => (
+const CartIcon = ({ viewCart, itemCount }) => (
   <div className="cart-icon" onClick={viewCart}>
     <ShoppingIcon className="shopping-icon" />
-    <span className="item-count">0</span>
+    <span className="item-count">{itemCount}</span>
   </div>
 );
 
-export default connect(null, { viewCart })(CartIcon);
+const mapStateToProps = state => ({
+  itemCount: selectCartItemsCount(state)
+});
+
+export default connect(mapStateToProps, { viewCart })(CartIcon);

@@ -19,6 +19,7 @@ export default function(state = initialState, action) {
     case ADD_TO_CART:
       return {
         ...state,
+        isHidden: false,
         cartItems: addItemsToCart(state.cartItems, payload)
       };
     default:

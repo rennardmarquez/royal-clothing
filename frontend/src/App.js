@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import store from "./store";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
+import Checkout from "./pages/checkout/checkout";
 
 const App = ({ isAuthenticated }) => {
   useEffect(() => {
@@ -40,6 +41,11 @@ const App = ({ isAuthenticated }) => {
           }
         />
         <Route exact path="/shop" component={Shop} />
+        <Route
+          exact
+          path="/checkout"
+          render={() => (isAuthenticated ? <Checkout /> : <LoginRegister />)}
+        />
       </Switch>
       <Footer />
     </Fragment>
