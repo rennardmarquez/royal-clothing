@@ -18,6 +18,9 @@ import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 import Checkout from "./pages/checkout/checkout";
 
+//Selector
+import { selectIsAuthenticated } from "./selectors/auth";
+
 const App = ({ isAuthenticated }) => {
   useEffect(() => {
     if (localStorage.token) {
@@ -30,7 +33,6 @@ const App = ({ isAuthenticated }) => {
     <Fragment>
       <Announcement />
       <Header />
-
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route
@@ -53,7 +55,7 @@ const App = ({ isAuthenticated }) => {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: selectIsAuthenticated(state)
 });
 
 export default connect(mapStateToProps)(App);
