@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import CartItem from "../cart-item/cart-item";
 
 import { createStructuredSelector } from "reselect";
-import { selectCartItems, selectIsHidden } from "../../selectors/cart";
+import { selectCartItems } from "../../selectors/cart";
 import { viewCart } from "../../actions/cart";
 
 const CartDropdown = ({ cartItems, history, viewCart }) => {

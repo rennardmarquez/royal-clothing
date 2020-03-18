@@ -8,3 +8,4 @@ export const LOGOUT = "LOGOUT";
 export const SET_ALERT = "SET_ALERT";
 export const VIEW_CART = "VIEW_CART";
 export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_TO_CART = "REMOVE_TO_CART";
